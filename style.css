@@ -1358,6 +1358,307 @@ body {
 
 
 /* =========================================================
+   TOP HUNTERS LEADERBOARD
+========================================================= */
+
+.leaderboardButton {
+
+    margin-top: 12px;
+
+}
+
+
+.leaderboardScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 200;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.97
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.leaderboardPanel {
+
+    position: relative;
+
+    width:
+        min(
+            900px,
+            90vw
+        );
+
+    max-height: 85vh;
+
+    padding: 35px;
+
+    border:
+        1px solid
+        #4a2018;
+
+    background:
+        #070707;
+
+    box-shadow:
+        0 0 35px
+        rgba(
+            120,
+            30,
+            15,
+            0.18
+        );
+
+}
+
+
+.leaderboardSmall {
+
+    text-align: center;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 13px;
+
+    letter-spacing: 5px;
+
+    color: #706a63;
+
+}
+
+
+.leaderboardTitle {
+
+    margin:
+        8px 0 0;
+
+    text-align: center;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 52px;
+
+    letter-spacing: 2px;
+
+    color: #a83528;
+
+}
+
+
+.leaderboardLine {
+
+    width: 230px;
+
+    height: 2px;
+
+    margin:
+        15px auto 20px;
+
+    background:
+        #652d24;
+
+}
+
+
+.leaderboardStatus {
+
+    text-align: center;
+
+    min-height: 18px;
+
+    margin-bottom: 12px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #777069;
+
+}
+
+
+.leaderboardHeader,
+.leaderboardRow {
+
+    display: grid;
+
+    grid-template-columns:
+        90px
+        1fr
+        120px
+        140px;
+
+    align-items: center;
+
+}
+
+
+.leaderboardHeader {
+
+    padding:
+        12px 15px;
+
+    border-bottom:
+        1px solid
+        #3f201a;
+
+    color: #777069;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.leaderboardRow {
+
+    padding:
+        14px 15px;
+
+    border-bottom:
+        1px solid
+        #171717;
+
+    color: #ddd8d0;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 18px;
+
+}
+
+
+.leaderboardRow:nth-child(1) {
+
+    color: #e0dbd2;
+
+}
+
+
+.leaderboardRank {
+
+    color: #a83528;
+
+}
+
+
+.leaderboardHunter {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.leaderboardClose {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    width: 42px;
+
+    height: 42px;
+
+    border:
+        1px solid
+        #652d24;
+
+    background:
+        #090909;
+
+    color: #a83528;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+}
+
+
+.leaderboardClose:hover {
+
+    background: #21130f;
+
+}
+
+
+.leaderboardScreen.hidden {
+
+    display: none;
+
+}
+
+
+@media (max-width: 650px) {
+
+    .leaderboardPanel {
+
+        padding: 22px 12px;
+
+    }
+
+
+    .leaderboardTitle {
+
+        font-size: 38px;
+
+    }
+
+
+    .leaderboardHeader,
+    .leaderboardRow {
+
+        grid-template-columns:
+            55px
+            1fr
+            70px
+            80px;
+
+    }
+
+}
+
+
+/* =========================================================
    RESPONSIVE
 ========================================================= */
 

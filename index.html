@@ -449,12 +449,77 @@
                 HUNT AGAIN
             </button>
 
+                        <button
+                id="leaderboardButton"
+                class="primaryButton leaderboardButton"
+            >
+                TOP HUNTERS
+            </button>
+
         </div>
 
     </section>
 
+
+<!-- =========================================================
+     TOP HUNTERS LEADERBOARD
+========================================================= -->
+
+<section
+    id="leaderboardScreen"
+    class="leaderboardScreen hidden"
+>
+
+    <div class="leaderboardPanel">
+
+        <button
+            id="closeLeaderboard"
+            class="leaderboardClose"
+        >
+            ×
+        </button>
+
+        <div class="leaderboardSmall">
+            DEMO HUNTER
+        </div>
+
+        <h2 class="leaderboardTitle">
+            TOP HUNTERS
+        </h2>
+
+        <div class="leaderboardLine"></div>
+
+        <div
+            id="leaderboardStatus"
+            class="leaderboardStatus"
+        >
+            LOADING...
+        </div>
+
+        <div class="leaderboardHeader">
+
+            <span>RANK</span>
+
+            <span>HUNTER</span>
+
+            <span>KILLS</span>
+
+            <span>TIME</span>
+
+        </div>
+
+        <div
+            id="leaderboardRows"
+            class="leaderboardRows"
+        ></div>
+
+    </div>
+
+</section>
+
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="game.js"></script>
 

@@ -3,6 +3,22 @@
 // ACTIVE WAVE + ROBUST AUDIO VERSION
 // ============================================================
 
+// ============================================================
+// SUPABASE
+// ============================================================
+
+const SUPABASE_URL =
+    "https://hjrapdkhissblmatdcor.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_fVDUirdnqU167U8CgiD1LA_Nh9GVltj";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
 
 // ============================================================
 // CANVAS
@@ -106,6 +122,31 @@ const finalTime =
 
 const finalWave =
     document.getElementById("finalWave");
+
+const leaderboardButton =
+    document.getElementById(
+        "leaderboardButton"
+    );
+
+const leaderboardScreen =
+    document.getElementById(
+        "leaderboardScreen"
+    );
+
+const leaderboardRows =
+    document.getElementById(
+        "leaderboardRows"
+    );
+
+const leaderboardStatus =
+    document.getElementById(
+        "leaderboardStatus"
+    );
+
+const closeLeaderboard =
+    document.getElementById(
+        "closeLeaderboard"
+    );
 
 
 // ============================================================
@@ -3131,6 +3172,7 @@ function endGame() {
                 "0"
             );
 
+            submitHunterScore();
 
     gameOverScreen.classList.remove(
         "hidden"
@@ -3141,6 +3183,212 @@ function endGame() {
 
 }
 
+// ============================================================
+// SUBMIT HUNTER SCORE
+// ============================================================
+
+async function submitHunterScore() {
+
+    try {
+
+        const { error } =
+            await supabaseClient
+                .from("hunters")
+                .insert({
+                    hunter_name:
+                        hunterName,
+
+                    kills:
+                        kills,
+
+                    survival_time:
+                        Number(
+                            survivalTime.toFixed(2)
+                        ),
+
+                    wave:
+                        wave
+                });
+
+
+        if (error) {
+
+            console.error(
+                "Leaderboard submission failed:",
+                error
+            );
+
+        }
+
+    }
+    catch (error) {
+
+        console.error(
+            "Leaderboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// LOAD TOP HUNTERS
+// ============================================================
+
+async function loadLeaderboard() {
+
+    leaderboardStatus.textContent =
+        "ACCESSING HUNTER RECORDS...";
+
+    leaderboardRows.innerHTML = "";
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("hunters")
+                .select(
+                    "hunter_name,kills,survival_time,wave"
+                )
+                .order(
+                    "kills",
+                    {
+                        ascending: false
+                    }
+                )
+                .order(
+                    "survival_time",
+                    {
+                        ascending: false
+                    }
+                );
+        
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            leaderboardStatus.textContent =
+                "NO HUNTERS RECORDED YET.";
+
+            return;
+
+        }
+
+
+        leaderboardStatus.textContent ="";
+
+
+        data.forEach(
+            (hunter, index) => {
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+                row.className =
+                    "leaderboardRow";
+
+
+                row.innerHTML = `
+
+                    <span
+                        class="leaderboardRank"
+                    >
+                        #${index + 1}
+                    </span>
+
+                    <span
+                        class="leaderboardHunter"
+                    >
+                        ${escapeLeaderboardText(
+                            hunter.hunter_name
+                        )}
+                    </span>
+
+                    <span>
+                        ${hunter.kills}
+                    </span>
+
+                    <span>
+                        ${formatTime(
+                            Math.floor(
+                                hunter.survival_time
+                            )
+                        )}
+                    </span>
+
+                `;
+
+
+                leaderboardRows.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Leaderboard loading failed:",
+            error
+        );
+
+
+        leaderboardStatus.textContent =
+            "LEADERBOARD OFFLINE";
+
+    }
+
+}
+
+
+// ============================================================
+// LEADERBOARD TEXT SAFETY
+// ============================================================
+
+function escapeLeaderboardText(
+    value
+) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 // ============================================================
 // MUSIC FADE
@@ -3530,6 +3778,31 @@ document.getElementById(
 .addEventListener(
     "click",
     restartGame
+);
+
+leaderboardButton.addEventListener(
+    "click",
+    () => {
+
+        leaderboardScreen.classList.remove(
+            "hidden"
+        );
+
+        loadLeaderboard();
+
+    }
+);
+
+
+closeLeaderboard.addEventListener(
+    "click",
+    () => {
+
+        leaderboardScreen.classList.add(
+            "hidden"
+        );
+
+    }
 );
 
 
