@@ -980,6 +980,10 @@ function getDifficulty() {
 }
 
 
+// ============================================================
+// ENEMY LIMIT
+// ============================================================
+
 function getEnemyLimit() {
 
     /*
@@ -1008,48 +1012,11 @@ function getEnemyLimit() {
 }
 
 
+// ============================================================
+// BURST SIZE
+// ============================================================
 
-
-    /*
-        Wave 1:
-        normally 2
-
-        Wave 2:
-        2-3
-
-        Wave 3:
-        2-3
-
-        Wave 4+:
-        occasionally 4
-    */
-
-    if (
-        wave === 1
-    ) {
-
-        return 2;
-
-    }
-
-
-    if (
-        wave === 2
-    ) {
-
-        return (
-            Math.random() <
-            0.35
-                ? 3
-                : 2
-        );
-
-    }
-
-
-    if (
-        wave <= 4
-    ) {function getBurstSize() {
+function getBurstSize() {
 
     /*
         Wave 1:
@@ -1107,16 +1074,6 @@ function getEnemyLimit() {
     );
 
 }
-
-    return (
-        Math.random() <
-        0.35
-            ? 4
-            : 3
-    );
-
-}
-
 
 // ============================================================
 // WAVE ANNOUNCEMENT
@@ -3344,10 +3301,6 @@ function runCountdown() {
 
 
     let count = 3;
-
-
-    let count = 3;
-
 
     readyText.textContent =
         "GET READY";
