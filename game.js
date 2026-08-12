@@ -918,23 +918,30 @@ function getWaveProgress() {
 function getSpawnInterval() {
 
     /*
-        0 sec:
-        ~1000 ms
+        Faster reinforcement.
 
-        20 sec:
-        ~850 ms
+        Early game:
+        ~800 ms
 
-        40 sec:
-        ~700 ms
-
-        60 sec:
-        ~550 ms
+        Mid game:
+        ~600 ms
 
         Later:
-        ~450 ms
+        approaches 300 ms
     */
 
-    
+    const progressiveReduction =
+        survivalTime * 8;
+
+
+    return Math.max(
+
+        300,
+
+        800 -
+        progressiveReduction
+
+    );
 
 }
 
@@ -942,24 +949,31 @@ function getSpawnInterval() {
 function getDifficulty() {
 
     /*
-        Progressive enemy speed.
+        Progressive difficulty.
 
-        Early game:
+        Wave 1:
         Manageable.
 
-        Later waves:
-        Significantly faster.
+        Wave 2:
+        Faster.
 
-        The two-gun system remains unchanged.
+        Wave 3:
+        Noticeable pressure.
+
+        Wave 4+:
+        Hard.
+
+        Later:
+        Very hard.
     */
 
     return Math.min(
 
-        0.90 +
-        (wave - 1) * 0.12 +
-        survivalTime / 500,
+        0.95 +
+        (wave - 1) * 0.15 +
+        survivalTime / 400,
 
-        1.90
+        2.20
 
     );
 
@@ -969,35 +983,32 @@ function getDifficulty() {
 function getEnemyLimit() {
 
     /*
-        Progressive enemy count.
+        More enemies as waves increase.
 
         Wave 1: 7
-        Wave 2: 8
-        Wave 3: 9
-        Wave 4: 10
-        Wave 5: 11
-        Wave 6: 12
-        Wave 7: 13
-        Wave 8: 15
-        Wave 9+: 16
+        Wave 2: 9
+        Wave 3: 10
+        Wave 4: 12
+        Wave 5: 13
+        Wave 6: 15
+        Wave 7+: 17
     */
 
     return Math.min(
 
         7 +
         Math.floor(
-            (wave - 1) *
-            1.15
+            (wave - 1) * 1.35
         ),
 
-        16
+        17
 
     );
 
 }
 
 
-function getBurstSize() {
+
 
     /*
         Wave 1:
@@ -1038,17 +1049,64 @@ function getBurstSize() {
 
     if (
         wave <= 4
+    ) {function getBurstSize() {
+
+    /*
+        Wave 1:
+        2 enemies
+
+        Wave 2:
+        2-3 enemies
+
+        Wave 3:
+        3-4 enemies
+
+        Wave 4+:
+        4-5 enemies
+    */
+
+    if (
+        wave === 1
+    ) {
+
+        return 2;
+
+    }
+
+
+    if (
+        wave === 2
     ) {
 
         return (
-            Math.random() <
-            0.40
+            Math.random() < 0.40
                 ? 3
                 : 2
         );
 
     }
 
+
+    if (
+        wave <= 3
+    ) {
+
+        return (
+            Math.random() < 0.50
+                ? 4
+                : 3
+        );
+
+    }
+
+
+    return (
+        Math.random() < 0.35
+            ? 5
+            : 4
+    );
+
+}
 
     return (
         Math.random() <
@@ -1179,7 +1237,7 @@ function spawnEnemy() {
             (
                 Math.random() -
                 0.5
-            ) * 0.65,
+            ) * 0.85,
 
         phase:
             Math.random() *
@@ -3218,12 +3276,6 @@ function prepareHunt() {
         hunterName;
 
 
-    localStorage.setItem(
-        "demoHunterName",
-        hunterName
-    );
-
-
     /*
         This is a real user gesture.
         Prepare all audio now.
@@ -3283,7 +3335,15 @@ function runCountdown() {
     }
 
 
+    // Completely remove previous gameplay
+    gameRunning = false;
+
+    clearGameState();
+
     stopGameVideo();
+
+
+    let count = 3;
 
 
     let count = 3;
@@ -3347,6 +3407,78 @@ function runCountdown() {
 
 }
 
+// ============================================================
+// CLEAR GAME STATE / VISUALS
+// ============================================================
+
+function clearGameState() {
+
+    // Stop automatic firing
+    stopAutomaticFire();
+
+    // Stop all gun sounds
+    stopAllGunSounds();
+
+    // Cancel animation frame
+    if (
+        animationFrameId !== null
+    ) {
+
+        cancelAnimationFrame(
+            animationFrameId
+        );
+
+        animationFrameId = null;
+
+    }
+
+    // Clear all active objects
+    bullets.length = 0;
+    enemies.length = 0;
+    particles.length = 0;
+
+    // Reset timers
+    enemySpawnTimer = 0;
+    damageCooldown = 0;
+    shakeTime = 0;
+    muzzleFlashTime = 0;
+
+    // Clear wave announcement
+    if (
+        waveAnnouncementTimer
+    ) {
+
+        clearTimeout(
+            waveAnnouncementTimer
+        );
+
+        waveAnnouncementTimer = null;
+
+    }
+
+    if (
+        waveAnnouncement
+    ) {
+
+        waveAnnouncement.classList.add(
+            "hidden"
+        );
+
+        waveAnnouncement.classList.remove(
+            "show"
+        );
+
+    }
+
+    // Completely clear previous canvas image
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
 
 // ============================================================
 // RESTART
@@ -3354,33 +3486,44 @@ function runCountdown() {
 
 function restartGame() {
 
+    // Make absolutely sure the previous game is stopped
+    gameRunning = false;
+
+    deathPending = false;
+
+    clearGameState();
+
+    stopGameVideo();
+
+    stopMusic();
+
+
+    // Hide game over
     gameOverScreen.classList.add(
         "hidden"
     );
 
 
+    // Hide gameplay HUD
     arcadeSidebar.classList.add(
         "hidden"
     );
 
 
-    stopGameVideo();
-
-
+    // Show main menu
     mainMenu.classList.remove(
         "hidden"
     );
 
 
+    // Reset login video
     if (loginVideo) {
 
         loginVideo.classList.remove(
             "hidden"
         );
 
-
         loginVideo.currentTime = 0;
-
 
         loginVideo.play().catch(
             () => {}
@@ -3389,8 +3532,25 @@ function restartGame() {
     }
 
 
-    hunterNameInput.value =
-        hunterName;
+    // IMPORTANT:
+    // Start with a fresh name
+    hunterName = "";
+
+    hunterNameInput.value = "";
+
+    nameError.classList.remove(
+        "show"
+    );
+
+
+    // Reset displayed ready name
+    readyName.textContent =
+        "HUNTER";
+
+
+    // Reset countdown
+    countdown.textContent =
+        "3";
 
 
     hunterNameInput.focus();
@@ -3467,29 +3627,6 @@ hunterNameInput.addEventListener(
     }
 );
 
-
-// ============================================================
-// SAVED NAME
-// ============================================================
-
-const savedName =
-    localStorage.getItem(
-        "demoHunterName"
-    );
-
-
-if (
-    savedName
-) {
-
-    hunterName =
-        savedName.toUpperCase();
-
-
-    hunterNameInput.value =
-        hunterName;
-
-}
 
 
 // ============================================================
