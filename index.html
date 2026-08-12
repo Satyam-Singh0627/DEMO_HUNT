@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DEMO HUNTER</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<div id="gameContainer">
+
+    <!-- GAMEPLAY VIDEO -->
+
+    <video
+        id="gameVideo"
+        class="gameVideo hidden"
+        muted
+        loop
+        playsinline
+        preload="auto"
+    >
+
+        <source
+            src="assets/game.mp4"
+            type="video/mp4"
+        >
+
+    </video>
+
+
+    <!-- GAME CANVAS -->
+
+    <canvas id="gameCanvas"></canvas>
+
+
+    <!-- MENU -->
+
+    <section
+        id="mainMenu"
+        class="screen menuScreen"
+    >
+
+        <video
+            id="loginVideo"
+            class="loginVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+        >
+
+            <source
+                src="assets/login.mp4"
+                type="video/mp4"
+            >
+
+        </video>
+
+
+        <div class="loginShade"></div>
+
+
+        <div class="menuContent">
+
+            <h1 class="gameTitle">
+                DEMO HUNTER
+            </h1>
+
+
+            <div class="titleUnderline"></div>
+
+
+            <div class="hunterForm">
+
+                <label for="hunterName">
+                    ENTER HUNTER NAME
+                </label>
+
+
+                <input
+                    id="hunterName"
+                    type="text"
+                    maxlength="16"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="YOUR NAME"
+                >
+
+
+                <div
+                    id="nameError"
+                    class="nameError"
+                >
+                    ENTER YOUR NAME TO CONTINUE
+                </div>
+
+
+                <button
+                    id="startButton"
+                    class="primaryButton"
+                >
+                    PLAY
+                </button>
+
+            </div>
+
+
+            <div class="controls">
+
+                <div>
+                    <span>A / ←</span>
+                    MOVE LEFT
+                </div>
+
+
+                <div>
+                    <span>D / →</span>
+                    MOVE RIGHT
+                </div>
+
+
+                <div class="autoFireMenu">
+                    WEAPON FIRES AUTOMATICALLY
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- READY -->
+
+    <section
+        id="readyScreen"
+        class="screen hidden"
+    >
+
+        <div class="readyContent">
+
+            <div class="readySmall">
+                HUNTER
+            </div>
+
+
+            <div
+                id="readyName"
+                class="readyName"
+            >
+                HUNTER
+            </div>
+
+
+            <div
+                id="readyText"
+                class="readyText"
+            >
+                GET READY
+            </div>
+
+
+            <div
+                id="countdown"
+                class="countdown"
+            >
+                3
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SIDEBAR -->
+
+    <aside
+        id="arcadeSidebar"
+        class="hidden"
+    >
+
+        <div class="sidebarLogo">
+
+            <div>DEMO</div>
+
+            <span>HUNTER</span>
+
+        </div>
+
+
+        <div class="sidebarDivider"></div>
+
+
+        <div class="statBlock">
+
+            <div class="statLabel">
+                HUNTER
+            </div>
+
+            <div
+                id="hudHunterName"
+                class="statValue hunterNameValue"
+            >
+                ---
+            </div>
+
+        </div>
+
+
+        <div class="statBlock">
+
+            <div class="statLabel">
+                WAVE
+            </div>
+
+            <div
+                id="wave"
+                class="statValue waveValue"
+            >
+                01
+            </div>
+
+        </div>
+
+
+        <div class="statBlock">
+
+            <div class="statLabel">
+                KILLS
+            </div>
+
+            <div
+                id="kills"
+                class="statValue"
+            >
+                000
+            </div>
+
+        </div>
+
+
+        <div class="statBlock">
+
+            <div class="statLabel">
+                TIME
+            </div>
+
+            <div
+                id="time"
+                class="statValue"
+            >
+                00:00
+            </div>
+
+        </div>
+
+
+        <div class="statBlock">
+
+            <div class="statLabel">
+                LIVES
+            </div>
+
+            <div
+                id="lives"
+                class="lives"
+            >
+                ♥ ♥ ♥
+            </div>
+
+        </div>
+
+
+        <div class="sidebarBottom">
+
+            <div class="sidebarDivider"></div>
+
+
+            <div class="controlTitle">
+                CONTROLS
+            </div>
+
+
+            <div class="controlLine">
+
+                <span>A / ←</span>
+
+                MOVE LEFT
+
+            </div>
+
+
+            <div class="controlLine">
+
+                <span>D / →</span>
+
+                MOVE RIGHT
+
+            </div>
+
+
+            <div class="autoFire">
+                AUTO FIRE
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- WAVE -->
+
+    <div
+        id="waveAnnouncement"
+        class="waveAnnouncement hidden"
+    >
+
+        <div class="waveSmall">
+            INCOMING
+        </div>
+
+        <div
+            id="waveAnnouncementNumber"
+            class="waveNumber"
+        >
+            WAVE 01
+        </div>
+
+    </div>
+
+
+    <!-- DAMAGE -->
+
+    <div
+        id="damageFlash"
+        class="damageFlash"
+    ></div>
+
+
+    <!-- GAME OVER -->
+
+    <section
+        id="gameOverScreen"
+        class="screen hidden"
+    >
+
+        <div class="gameOverContent">
+
+            <div class="gameOverLabel">
+                HUNT TERMINATED
+            </div>
+
+
+            <h1
+                id="deathTitle"
+                class="deathTitle"
+            >
+                HUNTER DIED
+            </h1>
+
+
+            <div class="deathLine"></div>
+
+
+            <div class="resultGrid">
+
+                <div class="resultBox">
+
+                    <span class="resultLabel">
+                        DEMOGORGONS
+                        <br>
+                        DESTROYED
+                    </span>
+
+                    <span
+                        id="finalKills"
+                        class="resultValue"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="resultBox">
+
+                    <span class="resultLabel">
+                        TIME SURVIVED
+                    </span>
+
+                    <span
+                        id="finalTime"
+                        class="resultValue"
+                    >
+                        00:00
+                    </span>
+
+                </div>
+
+
+                <div class="resultBox">
+
+                    <span class="resultLabel">
+                        WAVE REACHED
+                    </span>
+
+                    <span
+                        id="finalWave"
+                        class="resultValue"
+                    >
+                        01
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="rankingNote">
+
+                HIGHER KILLS RANK HIGHER
+
+                <br>
+
+                SURVIVAL TIME BREAKS TIES
+
+            </div>
+
+
+            <button
+                id="restartButton"
+                class="primaryButton"
+            >
+                HUNT AGAIN
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="game.js"></script>
+
+</body>
+
+</html>

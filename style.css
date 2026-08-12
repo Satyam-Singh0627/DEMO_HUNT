@@ -1,0 +1,1411 @@
+:root {
+
+    --sidebar-width: 260px;
+
+    --black: #050505;
+
+    --red-dark: #4c1912;
+
+    --red: #9b3325;
+
+    --red-light: #c65c45;
+
+    --cream: #ded8ce;
+
+    --muted: #77716a;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #000;
+
+    font-family:
+        "Arial Narrow",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+    user-select: none;
+
+}
+
+
+#gameContainer {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #000;
+
+}
+
+
+/* =========================================================
+   GAMEPLAY VIDEO
+========================================================= */
+
+.gameVideo {
+
+    position: absolute;
+
+    top: 0;
+
+    left: var(--sidebar-width);
+
+    width:
+        calc(
+            100vw -
+            var(--sidebar-width)
+        );
+
+    height: 100vh;
+
+    object-fit: cover;
+
+    z-index: 1;
+
+    display: block;
+
+    background: #000;
+
+    filter:
+        brightness(0.72)
+        contrast(1.04)
+        saturate(0.82);
+
+}
+
+
+/* =========================================================
+   GAME CANVAS
+========================================================= */
+
+#gameCanvas {
+
+    position: absolute;
+
+    top: 0;
+
+    left: var(--sidebar-width);
+
+    width:
+        calc(
+            100vw -
+            var(--sidebar-width)
+        );
+
+    height: 100vh;
+
+    z-index: 5;
+
+    display: block;
+
+    pointer-events: none;
+
+    background: transparent;
+
+    image-rendering: pixelated;
+
+}
+
+
+/* =========================================================
+   GENERAL SCREENS
+========================================================= */
+
+.screen {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 50;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: white;
+
+}
+
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+.menuScreen {
+
+    background: transparent;
+
+}
+
+
+.loginVideo {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 0;
+
+    opacity: 0.95;
+
+    filter:
+        brightness(0.76)
+        contrast(1.03)
+        saturate(0.75);
+
+}
+
+
+.loginShade {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,0.30),
+            rgba(0,0,0,0.08),
+            rgba(0,0,0,0.34)
+        ),
+
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,0.15),
+            rgba(0,0,0,0.48)
+        );
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menuContent {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding:
+        30px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+.gameTitle {
+
+    width: max-content;
+
+    max-width: 95vw;
+
+    margin: 0 auto;
+
+    white-space: nowrap;
+
+    text-align: center;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size:
+        clamp(
+            56px,
+            7.8vw,
+            126px
+        );
+
+    line-height: 0.9;
+
+    letter-spacing: 1px;
+
+    color: #ac382a;
+
+    -webkit-text-stroke:
+        2px #d47a62;
+
+    text-shadow:
+
+        3px 4px 0 #38120d,
+
+        7px 8px 0 #170706;
+
+    transform:
+        skewX(-3deg);
+
+}
+
+
+.titleUnderline {
+
+    width:
+        min(
+            510px,
+            55vw
+        );
+
+    height: 2px;
+
+    margin:
+        18px auto 28px;
+
+    background:
+        #713126;
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.hunterForm {
+
+    width:
+        min(
+            420px,
+            88vw
+        );
+
+    margin:
+        0 auto;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+}
+
+
+.hunterForm label {
+
+    margin-bottom: 8px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
+
+    color: #ddd8d0;
+
+}
+
+
+#hunterName {
+
+    width: 100%;
+
+    height: 50px;
+
+    padding:
+        0 15px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.76
+        );
+
+    border:
+        2px solid
+        #4c3029;
+
+    border-radius: 2px;
+
+    outline: none;
+
+    color: white;
+
+    text-align: center;
+
+    text-transform: uppercase;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 19px;
+
+    letter-spacing: 2px;
+
+}
+
+
+#hunterName:focus {
+
+    border-color:
+        #8d4c3b;
+
+}
+
+
+#hunterName::placeholder {
+
+    color: #777;
+
+    text-transform: uppercase;
+
+}
+
+
+.nameError {
+
+    height: 16px;
+
+    margin-top: 6px;
+
+    font-size: 11px;
+
+    color:
+        #c75c47;
+
+    opacity: 0;
+
+}
+
+
+.nameError.show {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.primaryButton {
+
+    min-width: 285px;
+
+    height: 56px;
+
+    margin-top: 11px;
+
+    border:
+        2px solid
+        #743226;
+
+    border-radius: 2px;
+
+    background:
+        #120c0a;
+
+    color: #e8e3da;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 21px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        3px 3px 0
+        #25100b;
+
+}
+
+
+.primaryButton:hover {
+
+    background:
+        #21130f;
+
+}
+
+
+.primaryButton:active {
+
+    transform:
+        translateY(2px);
+
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.controls {
+
+    margin-top: 22px;
+
+    color: #bbb4ac;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+}
+
+
+.controls span {
+
+    color: #eee8df;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+}
+
+
+.autoFireMenu {
+
+    margin-top: 3px;
+
+    color: #865043;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   ARCADE SIDEBAR
+========================================================= */
+
+#arcadeSidebar {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width:
+        var(--sidebar-width);
+
+    height: 100vh;
+
+    z-index: 30;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #0a0a0a,
+            #030303 65%,
+            #080808
+        );
+
+    border-right:
+        2px solid #151515;
+
+    padding:
+        28px 21px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    color: #ddd8d0;
+
+}
+
+
+.sidebarLogo {
+
+    text-align: center;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 36px;
+
+    line-height: 0.82;
+
+    color: #a93729;
+
+}
+
+
+.sidebarLogo span {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #d9d4cc;
+
+    font-size: 28px;
+
+    letter-spacing: 3px;
+
+}
+
+
+.sidebarDivider {
+
+    width: 100%;
+
+    height: 1px;
+
+    margin:
+        21px 0;
+
+    background:
+        #3e1a14;
+
+}
+
+
+.statBlock {
+
+    padding:
+        9px 7px 14px;
+
+    margin-bottom:
+        6px;
+
+    border-bottom:
+        1px solid #181818;
+
+}
+
+
+.statLabel {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: #6d6862;
+
+}
+
+
+.statValue {
+
+    margin-top: 4px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 34px;
+
+    line-height: 1;
+
+    color: #ede8df;
+
+}
+
+
+.hunterNameValue {
+
+    font-size: 25px;
+
+    color: #b34a39;
+
+    word-break: break-word;
+
+}
+
+
+.waveValue {
+
+    color:
+        #b96b43;
+
+}
+
+
+.lives {
+
+    margin-top: 4px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 27px;
+
+    color: #b54a3d;
+
+    letter-spacing: 3px;
+
+}
+
+
+.sidebarBottom {
+
+    margin-top: auto;
+
+}
+
+
+.controlTitle {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    color: #625e59;
+
+    margin-bottom: 11px;
+
+}
+
+
+.controlLine {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: #6c6862;
+
+    font-size: 10px;
+
+}
+
+
+.controlLine span {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    color: #ddd8d0;
+
+    font-size: 13px;
+
+}
+
+
+.autoFire {
+
+    margin-top: 14px;
+
+    padding: 7px;
+
+    border:
+        1px solid #311612;
+
+    text-align: center;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color: #8a493b;
+
+}
+
+
+/* =========================================================
+   WAVE ANNOUNCEMENT
+========================================================= */
+
+.waveAnnouncement {
+
+    position: absolute;
+
+    left:
+        calc(
+            var(--sidebar-width) +
+            (
+                (100vw -
+                var(--sidebar-width))
+                / 2
+            )
+        );
+
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 25;
+
+    pointer-events: none;
+
+    text-align: center;
+
+    opacity: 0;
+
+}
+
+
+.waveAnnouncement.show {
+
+    animation:
+        waveAnnouncementAnim
+        1.25s
+        ease-out;
+
+}
+
+
+.waveSmall {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 16px;
+
+    letter-spacing: 5px;
+
+    color: #80766f;
+
+}
+
+
+.waveNumber {
+
+    margin-top: 6px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size:
+        clamp(
+            55px,
+            7vw,
+            90px
+        );
+
+    line-height: 0.85;
+
+    letter-spacing: 2px;
+
+    color: #a94736;
+
+}
+
+
+@keyframes waveAnnouncementAnim {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.88);
+
+    }
+
+    20% {
+
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+
+    }
+
+    75% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.05);
+
+    }
+
+}
+
+
+/* =========================================================
+   READY SCREEN
+========================================================= */
+
+#readyScreen {
+
+    left: 0;
+
+    width: 100vw;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.72
+        );
+
+}
+
+
+.readyContent {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    width: 100%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+}
+
+
+.readySmall {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 15px;
+
+    letter-spacing: 5px;
+
+    color: #74706a;
+
+}
+
+
+.readyName {
+
+    margin-top: 7px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size:
+        clamp(
+            50px,
+            7vw,
+            92px
+        );
+
+    color:
+        #b14a3a;
+
+    line-height: 0.9;
+
+}
+
+
+.readyText {
+
+    margin-top: 18px;
+
+    font-size: 19px;
+
+    letter-spacing: 3px;
+
+    color: #d0cbc2;
+
+}
+
+
+.countdown {
+
+    margin-top: 20px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 100px;
+
+    color: #e2ddd5;
+
+}
+
+
+/* =========================================================
+   DAMAGE
+========================================================= */
+
+.damageFlash {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    background:
+        rgba(
+            150,
+            25,
+            15,
+            0.33
+        );
+
+    opacity: 0;
+
+}
+
+
+.damageFlash.active {
+
+    animation:
+        damageFlashAnim
+        0.2s
+        steps(2, end);
+
+}
+
+
+@keyframes damageFlashAnim {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.32;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   GAME OVER
+========================================================= */
+
+#gameOverScreen {
+
+    left: 0;
+
+    width: 100vw;
+
+    background:
+        rgba(
+            4,
+            2,
+            2,
+            0.95
+        );
+
+    backdrop-filter:
+        blur(7px);
+
+}
+
+
+.gameOverContent {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    width:
+        min(
+            820px,
+            90vw
+        );
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
+}
+
+
+.gameOverLabel {
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 16px;
+
+    letter-spacing: 5px;
+
+    color: #706a63;
+
+}
+
+
+.deathTitle {
+
+    margin-top: 8px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size:
+        clamp(
+            45px,
+            6vw,
+            84px
+        );
+
+    line-height: 0.9;
+
+    white-space: nowrap;
+
+    color: #a83528;
+
+}
+
+
+.deathLine {
+
+    width: 225px;
+
+    height: 2px;
+
+    margin:
+        19px auto 28px;
+
+    background:
+        #652d24;
+
+}
+
+
+.resultGrid {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap: 16px;
+
+}
+
+
+.resultBox {
+
+    width: 215px;
+
+    min-height: 120px;
+
+    padding:
+        19px;
+
+    border:
+        1px solid #3f201a;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.72
+        );
+
+}
+
+
+.resultLabel {
+
+    display:
+        block;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    line-height: 1.3;
+
+    color: #777069;
+
+}
+
+
+.resultValue {
+
+    display:
+        block;
+
+    margin-top: 8px;
+
+    font-family:
+        Impact,
+        Haettenschweiler,
+        "Arial Narrow Bold",
+        sans-serif;
+
+    font-size: 45px;
+
+    color: #e0dbd2;
+
+}
+
+
+.rankingNote {
+
+    margin-top: 18px;
+
+    color: #746f68;
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+
+    line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .gameTitle {
+
+        font-size:
+            clamp(
+                50px,
+                7.1vw,
+                105px
+            );
+
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    :root {
+
+        --sidebar-width: 210px;
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    :root {
+
+        --sidebar-width: 175px;
+
+    }
+
+
+    .gameTitle {
+
+        font-size:
+            clamp(
+                38px,
+                6.8vw,
+                70px
+            );
+
+    }
+
+}
