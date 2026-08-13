@@ -1403,7 +1403,7 @@ body {
             90vw
         );
 
-    max-height: 85vh;
+    height: 85vh;
 
     padding: 35px;
 
@@ -1422,6 +1422,10 @@ body {
             15,
             0.18
         );
+
+    display: flex;
+
+    flex-direction: column;
 
 }
 
@@ -1538,6 +1542,19 @@ body {
 
 }
 
+.leaderboardRows {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding-right: 5px;
+
+}
 
 .leaderboardRow {
 
@@ -1708,5 +1725,31 @@ body {
             );
 
     }
+
+}
+
+.leaderboardRows::-webkit-scrollbar {
+
+    width: 6px;
+
+}
+
+.leaderboardRows::-webkit-scrollbar-track {
+
+    background: #0a0a0a;
+
+}
+
+.leaderboardRows::-webkit-scrollbar-thumb {
+
+    background: #652d24;
+
+    border-radius: 2px;
+
+}
+
+.leaderboardRows::-webkit-scrollbar-thumb:hover {
+
+    background: #a83528;
 
 }
