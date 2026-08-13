@@ -3152,7 +3152,7 @@ function endGame() {
 
 
     deathTitle.textContent =
-        `${hunterName} DIED`;
+        `${hunterName} LOST`;
 
 
     finalKills.textContent =
